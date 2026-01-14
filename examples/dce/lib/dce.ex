@@ -1,0 +1,20 @@
+defmodule Dce do
+  @moduledoc """
+  Documentation for `Dce`.
+  """
+  use Honey, license: "Dual BSD/GPL"
+
+  @sec "tracepoint/syscalls/sys_enter_kill"
+  def main(_ctx) do
+    if true do
+      # This one also doesn't show up in DeadCodeElimination, as this if has no return that is kept.
+      1
+      # Taking out the 0 below makes it be stored.
+    else
+      Honey.BpfHelpers.bpf_printk(["This will never print!"])
+      Honey.BpfHelpers.bpf_printk(["This will also not be in the AST after DCE!"])
+    end
+
+    0
+  end
+end

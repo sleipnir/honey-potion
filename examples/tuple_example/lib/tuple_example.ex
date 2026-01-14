@@ -1,0 +1,13 @@
+defmodule TupleExample do
+  @moduledoc """
+  Documentation for `TupleExample`.
+  """
+  use Honey, license: "Dual BSD/GPL"
+
+  @sec "tracepoint/syscalls/sys_enter_kill"
+  def main(_) do
+    y = 2
+    {1, {2, {"some string", x}}} = {1, {y, {"some string", 4}}}
+    Honey.BpfHelpers.bpf_printk(["x: %d", x])
+  end
+end
